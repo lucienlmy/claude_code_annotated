@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios' //导入一个叫 axios 的工具，用来在代码里发网络请求（调用接口、拿数据）。
 import { getOauthConfig } from '../constants/oauth.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
 import { logForDebugging } from '../utils/debug.js'
@@ -6,7 +6,7 @@ import { getOAuthHeaders, prepareApiRequest } from '../utils/teleport/api.js'
 
 export const HISTORY_PAGE_SIZE = 100
 
-export type HistoryPage = {
+export type HistoryPage = { //加了 export，别的文件才能用这个类型；不加，就只能在当前文件自己用。
   /** Chronological order within the page. */
   events: SDKMessage[]
   /** Oldest event ID in this page → before_id cursor for next-older page. */
@@ -31,7 +31,7 @@ export type HistoryAuthCtx = {
 export async function createHistoryAuthCtx(
   sessionId: string,
 ): Promise<HistoryAuthCtx> {
-  const { accessToken, orgUUID } = await prepareApiRequest()
+  const { accessToken, orgUUID } = await prepareApiRequest()// 进行claude官网的登录, 他会读取环境变量.里面的CLAUDE_API_KEY
   return {
     baseUrl: `${getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}/events`,
     headers: {
@@ -42,7 +42,7 @@ export async function createHistoryAuthCtx(
   }
 }
 
-async function fetchPage(
+async function fetchPage(//请求ctx里面的地址.返回一个HistoryPage对象.
   ctx: HistoryAuthCtx,
   params: Record<string, string | number | boolean>,
   label: string,
@@ -70,7 +70,7 @@ async function fetchPage(
  * Newest page: last `limit` events, chronological, via anchor_to_latest.
  * has_more=true means older events exist.
  */
-export async function fetchLatestEvents(
+export async function fetchLatestEvents(  
   ctx: HistoryAuthCtx,
   limit = HISTORY_PAGE_SIZE,
 ): Promise<HistoryPage | null> {

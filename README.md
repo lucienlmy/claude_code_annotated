@@ -6,8 +6,8 @@ scripts:
 vendor:
     第三方依赖.
     vendor\audio-capture-src\index.ts 音频模块.
-
-
+    vendor\url-handler-src\index.ts url处理模块.只有苹果有用.别人点击了url就返回url地址字符串.
+    src\assistant\sessionHistory.ts 会话话历史模块.
 
 
 
